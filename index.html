@@ -1,34 +1,325 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
+
 <head>
-	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Portafolio Cesar Hernandez</title>
-    <link rel="icon" href="assets/imgs/c.png">
-	<link rel="stylesheet" href="assets/css/carga.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Portafolio de Desarrollador Frontend - Interfaces modernas, rendimiento y accesibilidad.">
+  <title>César HEGA | Frontend Developer</title>
+
+  <!-- Fuentes tipográficas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-	<div class="container">
-		<img src="assets/imgs/c.png"class="ghost" x="0px" y="0px" width="150px" height="150px">
-		<p class="shadowFrame">
-			<svg version="1.1" class="shadow" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="61px" y="20px"
-				width="130px" height="39.744px" viewBox="0 0 122.436 39.744" enable-background="new 0 0 122.436 39.744"
-				xml:space="preserve"><ellipse fill="#737373" cx="75" cy="19.872" rx="49.25" ry="8.916"/></svg>
-		</p>
-	<div class="progress">
-        <div class="outer">
-			<div class="inner"></div>
+
+  <!-- NAVEGACIÓN -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="#" class="logo" id="devLogo" aria-label="Inicio">
+        <span class="logo-prefix">&lt;</span><span class="typing-text" id="typingText"></span><span
+          class="cursor">|</span><span class="logo-suffix">/&gt;</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú de navegación" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="nav-menu" id="navMenu">
+        <ul class="nav-list">
+          <li><a href="#proyectos" class="nav-link">Proyectos</a></li>
+          <li><a href="#habilidades" class="nav-link">Habilidades</a></li>
+          <li><a href="#sobre-mi" class="nav-link">Sobre mí</a></li>
+          <li><a href="#contacto" class="nav-link">Contacto</a></li>
+        </ul>
+        <button id="themeToggle" class="btn-theme" aria-label="Cambiar tema de color">
+          <span class="theme-icon">☀️</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero container">
+      <div class="hero-badge">
+        <span class="pulse-dot"></span> Disponible para nuevos proyectos
+      </div>
+      <h1 class="hero-title">
+        Desarrollador Frontend enfocado en crear <span class="gradient-text">experiencias web interactivas</span> y
+        eficientes.
+      </h1>
+      <p class="hero-subtitle">
+        Diseño y construyo interfaces de usuario limpias, accesibles y orientadas a rendimiento usando tecnologías web
+        nativas.
+      </p>
+      <div class="hero-actions">
+        <a href="#proyectos" class="btn btn-primary">Ver proyectos</a>
+        <a href="#contacto" class="btn btn-secondary">Contactar</a>
+      </div>
+    </section>
+
+    <!-- PROYECTOS DESTACADOS -->
+    <section id="proyectos" class="section container">
+      <div class="section-header">
+        <h2 class="section-title">Proyectos Destacados</h2>
+        <p class="section-subtitle">Una muestra de retos técnicos resueltos con atención al detalle.</p>
+      </div>
+
+      <div class="projects-grid">
+        <!-- Proyecto 1 -->
+        <article class="project-card reveal">
+          <div class="project-preview">
+            <div class="preview-placeholder">Demo Preview #1</div>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Sistema de Monitoreo & Dashboard</h3>
+            <p class="project-desc">
+              Panel interactivo con actualización en tiempo real, renderizado dinámico de métricas y diseño responsivo
+              sin librerías pesadas.
+            </p>
+            <ul class="tag-list">
+              <li class="tag">HTML5</li>
+              <li class="tag">CSS Grid</li>
+              <li class="tag">JavaScript ES6+</li>
+              <li class="tag">Fetch API</li>
+            </ul>
+            <div class="project-links">
+              <a href="#" target="_blank" rel="noopener noreferrer" class="link-btn">Demo en vivo →</a>
+              <a href="#" target="_blank" rel="noopener noreferrer" class="link-btn link-ghost">Código en GitHub</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Proyecto 2 -->
+        <article class="project-card reveal">
+          <div class="project-preview">
+            <div class="preview-placeholder">Demo Preview #2</div>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Aplicación Web Interactiva</h3>
+            <p class="project-desc">
+              Herramienta enfocada en la interacción fluida del usuario, con gestión eficiente del estado local y diseño
+              accesible (a11y).
+            </p>
+            <ul class="tag-list">
+              <li class="tag">JavaScript</li>
+              <li class="tag">CSS Variables</li>
+              <li class="tag">Web Storage</li>
+            </ul>
+            <div class="project-links">
+              <a href="#" target="_blank" rel="noopener noreferrer" class="link-btn">Demo en vivo →</a>
+              <a href="#" target="_blank" rel="noopener noreferrer" class="link-btn link-ghost">Código en GitHub</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- HABILIDADES -->
+    <section id="habilidades" class="section container">
+      <div class="section-header">
+        <h2 class="section-title">Stack Técnico & Herramientas</h2>
+        <p class="section-subtitle">Tecnologías con las que construyo soluciones web y software.</p>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-group reveal">
+          <h3>Frontend Core</h3>
+          <ul>
+            <li>HTML5 Semántico & Accesibilidad (a11y)</li>
+            <li>CSS3 Moderno (Grid, Flexbox, Variables)</li>
+            <li>JavaScript ES6+ (Async/Await, DOM APIs)</li>
+            <li>Diseño Responsivo & Mobile-First</li>
+          </ul>
         </div>
-       </div>
-	</div>
-	
-<script type="text/javascript">
-        function redirect() {
-            window.open("http://cesarinfokiu.github.io/assets/php/index.html", '_self');
-        }
-        window.onload = setTimeout("redirect()", 900);
-</script>
+
+        <div class="skill-group reveal">
+          <h3>Backend & Bases de Datos</h3>
+          <ul>
+            <li>PHP (Desarrollo web & APIs)</li>
+            <li>MySQL (Modelado relacional, queries & CRUD)</li>
+            <li>Consumo e integración de APIs REST</li>
+            <li>Manejo y formateo de datos JSON</li>
+          </ul>
+        </div>
+
+        <div class="skill-group reveal">
+          <h3>Desktop & Entorno</h3>
+          <ul>
+            <li>Java (Aplicaciones de escritorio / GUI)</li>
+            <li>NetBeans IDE</li>
+            <li>Git & GitHub (Control de versiones)</li>
+            <li>Terminal & Entornos Linux</li>
+          </ul>
+        </div>
+
+        <div class="skill-group reveal">
+          <h3>Análisis & Optimización</h3>
+          <ul>
+            <li>Análisis de datos & visualización de métricas</li>
+            <li>Depuración avanzada con DevTools</li>
+            <li>Optimización de rendimiento (Web Vitals)</li>
+            <li>Arquitectura limpia y modular</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOBRE MÍ & FORMACIÓN -->
+    <section id="sobre-mi" class="section container">
+      <div class="about-card reveal">
+        <div class="about-text">
+          <h2 class="section-title">Sobre mí</h2>
+          <p>
+            Desarrollador enfocado principalmente en el ecosistema <strong>Frontend</strong>, con bases sólidas de
+            ingeniería de software para conectar el navegador con la infraestructura del servidor.
+          </p>
+          <p>
+            Cuento con experiencia construyendo aplicaciones web interactivas (HTML, CSS, JS), soluciones de backend y
+            bases de datos con <strong>PHP y MySQL</strong>, así como desarrollo de software de escritorio con
+            <strong>Java en NetBeans</strong>.
+          </p>
+
+          <!-- Formación académica -->
+          <div class="education-grid">
+            <div class="edu-badge">
+              <span class="edu-icon">🎓</span>
+              <div>
+                <strong>Ingeniería en Sistemas y Comunicaciones</strong>
+                <p>Formación en redes, arquitectura de software y telecomunicaciones.</p>
+              </div>
+            </div>
+            <div class="edu-badge">
+              <span class="edu-icon">📊</span>
+              <div>
+                <strong>Diplomado en Análisis de Datos</strong>
+                <p>Extracción, interpretación y visualización de datos para la toma de decisiones.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-actions">
+            <a href="cv.pdf" download class="btn btn-secondary">Descargar CV (.pdf)</a>
+            <a href="https://wa.me/525528565225?text=Hola%2C%20encontr%C3%A9%20tu%20contacto%20a%20trav%C3%A9s%20de%20tu%20portafolio%20web%20y%20me%20gustar%C3%ADa%20hablar%20contigo%20sobre%20un%20proyecto." class="btn btn-primary">Iniciar conversación</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto" class="section container">
+      <div class="contact-box reveal">
+        <h2 class="section-title">¿Tienes un proyecto en mente?</h2>
+        <p class="section-subtitle">Estoy abierto a nuevas oportunidades y colaboraciones técnicas.</p>
+
+        <div class="contact-card">
+          <p class="contact-email" id="emailText">cesar.hernandz.garrido@gmail.com</p>
+          <button id="copyBtn" class="btn btn-primary" aria-label="Copiar correo">
+            Copiar correo
+          </button>
+        </div>
+        <span id="copyToast" class="copy-toast" aria-live="polite"></span>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER CON SPRITES ANIMADOS -->
+  <footer class="footer">
+    <!-- Pista de sprites sobre la línea superior -->
+    <div class="footer-sprite-rail" aria-hidden="true">
+      <div class="sprite-runner sprite-1" title="Eevee">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/133.gif"
+          alt="Eevee" loading="lazy">
+      </div>
+      <div class="sprite-runner sprite-2" title="Vaporeon">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/134.gif"
+          alt="Vaporeon" loading="lazy">
+      </div>
+      <div class="sprite-runner sprite-3" title="Jolteon">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/135.gif"
+          alt="Jolteon" loading="lazy">
+      </div>
+      <div class="sprite-runner sprite-4" title="Flareon">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/136.gif"
+          alt="Flareon" loading="lazy">
+      </div>
+      <div class="sprite-runner sprite-5" title="Espeon">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/196.gif"
+          alt="Espeon" loading="lazy">
+      </div>
+      <div class="sprite-runner sprite-6" title="Umbreon">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/197.gif"
+          alt="Umbreon" loading="lazy">
+      </div>
+      <div class="sprite-runner sprite-7" title="Leafeon">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/470.gif"
+          alt="Leafeon" loading="lazy">
+      </div>
+      <div class="sprite-runner sprite-8" title="Glaceon">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/471.gif"
+          alt="Glaceon" loading="lazy">
+      </div>
+      <div class="sprite-runner sprite-9" title="Sylveon">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/700.gif"
+          alt="Sylveon" loading="lazy">
+      </div>
+    </div>
+
+    <div class="container footer-content">
+      <p>&copy; <span id="currentYear"></span> César Hernández Garrido. Construido con HTML, CSS y JS.</p>
+      <div class="footer-links">
+        <a href="https://github.com/CesarinFokiu" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/cesar-hernandz-garrido/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BARRA FLOTANTE DE ENLACES (DOCK SOCIAL) -->
+  <aside class="floating-socials" aria-label="Enlaces directos de contacto">
+    <a href="https://github.com/CesarinFokiu" target="_blank" rel="noopener noreferrer" class="social-dock-btn"
+      data-tooltip="GitHub">
+      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path
+          d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+        </path>
+      </svg>
+    </a>
+
+    <a href="https://www.linkedin.com/in/cesar-hernandz-garrido/" target="_blank" rel="noopener noreferrer"
+      class="social-dock-btn" data-tooltip="LinkedIn">
+      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+        <rect x="2" y="9" width="4" height="12"></rect>
+        <circle cx="4" cy="4" r="2"></circle>
+      </svg>
+    </a>
+
+    <a href="https://wa.me/525528565225?text=Hola%2C%20encontr%C3%A9%20tu%20contacto%20a%20trav%C3%A9s%20de%20tu%20portafolio%20web%20y%20me%20gustar%C3%ADa%20hablar%20contigo%20sobre%20un%20proyecto."
+      target="_blank" rel="noopener noreferrer" class="social-dock-btn social-whatsapp" data-tooltip="WhatsApp">
+      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path
+          d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+        </path>
+      </svg>
+    </a>
+
+    <span class="dock-line"></span>
+  </aside>
+
+  <script src="main.js"></script>
 </body>
+
 </html>
