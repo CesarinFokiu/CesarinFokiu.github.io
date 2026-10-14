@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dashboard de Monitoreo de Servidores y Redes en Tiempo Real con Canvas Charts, Telemetría Fetch y Syslog nativo.">
+  <title>NetPulse Telemetry | Enterprise Monitor</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="dash-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="live-indicator" id="liveDot"></span>
+        <div>
+          <h1>Dashboard <span></span>Demo</h1>
+          <span class="cluster-tag">Cluster: prod-us-east • Network Mesh</span>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <span class="sync-status" id="syncStatus">Sincronizado: hace 0s</span>
+        
+        <button id="pauseBtn" class="btn-ctrl" title="Pausar o reanudar sondeo en tiempo real">
+          <span id="pauseIcon">⏸</span> Pausar
+        </button>
+
+        <button id="stressBtn" class="btn-ctrl btn-chaos" title="Inyectar tráfico y estrés de red para pruebas">
+          ⚡ Simular Estrés
+        </button>
+
+        <button id="exportLogsBtn" class="btn-ctrl" title="Exportar reporte de eventos">
+          📥 Exportar Syslog
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="dash-main">
+    
+    <section class="kpi-grid" aria-label="Métricas Principales">
+      <article class="kpi-card">
+        <span class="kpi-label">Servidores en Línea</span>
+        <div class="kpi-row">
+          <span class="kpi-value" id="activeNodes">0/0</span>
+          <span class="kpi-badge badge-ok" id="uptimeBadge">99.9% Uptime</span>
+        </div>
+        <div class="mini-bar-wrap">
+          <div class="mini-bar" id="nodesBar"></div>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <span class="kpi-label">Latencia de Red (Ping)</span>
+        <div class="kpi-row">
+          <span class="kpi-value" id="avgLatency">-- ms</span>
+          <span class="kpi-badge" id="latencyBadge">Óptimo</span>
+        </div>
+        <span class="kpi-subtext">Jitter promedio: ±2.4ms</span>
+      </article>
+
+      <article class="kpi-card">
+        <span class="kpi-label">Carga Global de CPU</span>
+        <div class="kpi-row">
+          <span class="kpi-value" id="avgCpu">--%</span>
+          <span class="kpi-badge" id="cpuBadge">Nominal</span>
+        </div>
+        <div class="mini-bar-wrap">
+          <div class="mini-bar" id="cpuBar"></div>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <span class="kpi-label">Incidentes / Degrada</span>
+        <div class="kpi-row">
+          <span class="kpi-value" id="alertCount">0</span>
+          <span class="kpi-badge badge-warn" id="alertBadge">Estable</span>
+        </div>
+        <span class="kpi-subtext" id="incidentSubtext">0 paquetes perdidos</span>
+      </article>
+    </section>
+
+    <section class="charts-grid" aria-label="Análisis Gráfico de Telemetría">
+      <article class="chart-card">
+        <div class="chart-header">
+          <div>
+            <h2>Historial de Latencia en Vivo (ms)</h2>
+            <p>Muestreo en tiempo real cada 3.5s vía Fetch API</p>
+          </div>
+          <span class="chart-tag" id="chartLiveTag">STREAM ACTIVO</span>
+        </div>
+        <div class="canvas-wrapper">
+          <canvas id="lineChart" width="600" height="200"></canvas>
+        </div>
+      </article>
+
+      <article class="chart-card donut-card">
+        <div class="chart-header">
+          <div>
+            <h2>Capacidad de Almacenamiento & RAM</h2>
+            <p>Uso distribuido en el clúster</p>
+          </div>
+        </div>
+        <div class="donut-content">
+          <div class="canvas-donut-wrapper">
+            <canvas id="donutChart" width="160" height="160"></canvas>
+            <div class="donut-center-text" id="donutPercent">68%</div>
+          </div>
+          <div class="donut-legend" id="donutLegend">
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <div class="panels-grid">
+      <section class="panel nodes-panel">
+        <div class="panel-header">
+          <div>
+            <h2>Malla de Nodos del Servidor</h2>
+            <small>Haz clic en cualquier nodo para ver su diagnóstico completo</small>
+          </div>
+          <div class="filter-pills">
+            <button class="filter-pill active" data-filter="all">Todos</button>
+            <button class="filter-pill" data-filter="healthy">En Línea</button>
+            <button class="filter-pill" data-filter="degraded">Alerta</button>
+          </div>
+        </div>
+
+        <div class="nodes-list" id="nodesContainer">
+        </div>
+      </section>
+
+      <section class="panel logs-panel">
+        <div class="panel-header">
+          <div>
+            <h2>Terminal Syslog (Eventos en Tiempo Real)</h2>
+            <small>Buffer circular: últimos 40 eventos</small>
+          </div>
+          <button class="btn-ghost" id="clearLogsBtn">Limpiar</button>
+        </div>
+        <div class="terminal-container" id="terminalLogs">
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="modal-backdrop" id="nodeModal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-dot" id="modalDot"></span>
+          <h3 id="modalTitle">Detalle de Nodo</h3>
+        </div>
+        <button class="btn-close" id="closeModalBtn" aria-label="Cerrar modal">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+      </div>
+    </div>
+  </div>
+
+  <script src="dash.js"></script>
+</body>
+</html>

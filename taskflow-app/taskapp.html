@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Workspace Interactivo y Gestor de Tareas con Drag and Drop nativo, Web Storage y analíticas de productividad.">
+  <title>Task App | Workspace Interactivo</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="brand-icon" aria-hidden="true">⚡</span>
+        <div>
+          <h1>Task <span>App</span></h1>
+          <span class="version-tag">Interactive Workspace</span>
+        </div>
+      </div>
+      
+      <div class="header-actions">
+        <button id="exportBtn" class="btn-tool" title="Exportar respaldo en formato JSON">
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Exportar
+        </button>
+        <label for="importInput" class="btn-tool" title="Importar tareas desde archivo JSON">
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+          Importar
+        </label>
+        <input type="file" id="importInput" accept=".json" class="sr-only">
+      </div>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <section class="task-manager" aria-labelledby="formHeading">
+      
+      <div class="progress-section" aria-live="polite">
+        <div class="progress-meta">
+          <span class="progress-label">Progreso del Tablero</span>
+          <span class="progress-percent" id="progressPercent">0%</span>
+        </div>
+        <div class="progress-bar-wrap" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressAria">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="stats-pills">
+          <span class="pill" id="statTotal">Total: 0</span>
+          <span class="pill pill-pending" id="statPending">Pendientes: 0</span>
+          <span class="pill pill-done" id="statDone">Hechas: 0</span>
+        </div>
+      </div>
+
+      <form class="task-form" id="taskForm" autocomplete="off">
+        <h2 id="formHeading" class="sr-only">Crear nueva tarea</h2>
+        <div class="form-grid">
+          <div class="input-wrap text-wrap">
+            <label for="taskInput" class="sr-only">Descripción</label>
+            <input 
+              type="text" 
+              id="taskInput" 
+              class="input-control" 
+              placeholder="¿Qué reto técnico o tarea completarás hoy?..." 
+              required 
+              maxlength="140"
+            >
+          </div>
+
+          <div class="input-wrap">
+            <label for="categorySelect" class="sr-only">Categoría</label>
+            <select id="categorySelect" class="select-control" aria-label="Categoría">
+              <option value="dev">💻 Dev / Frontend</option>
+              <option value="work">📋 General / Trabajo</option>
+              <option value="bug">🐛 Fix / Bug</option>
+              <option value="study">📚 Aprendizaje</option>
+            </select>
+          </div>
+
+          <div class="input-wrap">
+            <label for="prioritySelect" class="sr-only">Prioridad</label>
+            <select id="prioritySelect" class="select-control" aria-label="Prioridad">
+              <option value="alta">🔴 Alta</option>
+              <option value="media" selected>🟡 Media</option>
+              <option value="baja">🟢 Baja</option>
+            </select>
+          </div>
+
+          <div class="input-wrap">
+            <label for="dueDateInput" class="sr-only">Fecha Límite</label>
+            <input type="date" id="dueDateInput" class="input-control date-control" aria-label="Fecha límite">
+          </div>
+
+          <button type="submit" class="btn btn-add" aria-label="Añadir tarea">
+            <span>+</span> Crear Tarea
+          </button>
+        </div>
+      </form>
+
+      <div class="toolbar-controls">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="search" id="searchInput" placeholder="Buscar por palabra clave..." aria-label="Buscar tareas">
+        </div>
+
+        <div class="filter-group" role="tablist" aria-label="Filtros de tareas">
+          <button class="filter-chip active" data-filter="all" role="tab" aria-selected="true">Todas</button>
+          <button class="filter-chip" data-filter="pending" role="tab" aria-selected="false">Pendientes</button>
+          <button class="filter-chip" data-filter="completed" role="tab" aria-selected="false">Hechas</button>
+        </div>
+
+        <button id="clearCompletedBtn" class="btn-clear-danger" aria-label="Purgar tareas completadas">
+          Purgar terminadas
+        </button>
+      </div>
+
+      <ul class="task-list" id="taskList" aria-label="Tablero de tareas reordenable">
+      </ul>
+
+      <div class="empty-state" id="emptyState" hidden>
+        <span class="empty-icon" aria-hidden="true">🚀</span>
+        <p>No se encontraron tareas con este criterio.</p>
+        <small>Crea un nuevo ticket o limpia tus filtros de búsqueda.</small>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>
+      Arrastra tareas para reordenarlas • Doble clic para editar en vivo • Almacenado seguro en <code>localStorage</code>
+    </p>
+  </footer>
+
+  <script src="taskapp.js"></script>
+</body>
+</html>
