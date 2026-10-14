@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const STORAGE_KEY = 'taskflow_pro_dataset_v2';
 
-  // Colección inicial con fechas calculadas automáticamente
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -41,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let searchQuery = '';
   let draggedTaskId = null;
 
-  // Referencias DOM
   const taskForm = document.getElementById('taskForm');
   const taskInput = document.getElementById('taskInput');
   const categorySelect = document.getElementById('categorySelect');
@@ -55,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const exportBtn = document.getElementById('exportBtn');
   const importInput = document.getElementById('importInput');
 
-  // Métricas
   const progressBar = document.getElementById('progressBar');
   const progressPercent = document.getElementById('progressPercent');
   const progressAria = document.getElementById('progressAria');
@@ -63,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const statPending = document.getElementById('statPending');
   const statDone = document.getElementById('statDone');
 
-  // Sintetizador Web Audio para microinteracciones de sonido sin ficheros externos
   function playBeep(type = 'success') {
     try {
       const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -85,18 +81,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       osc.start();
       osc.stop(audioCtx.currentTime + 0.15);
-    } catch {
-      // Ignorar si el usuario no ha interactuado aún con el audio
-    }
+    } catch {}
   }
 
-  // Guardado persistente
   function saveState() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
     updateAnalytics();
   }
 
-  // Actualización de progreso y analíticas
   function updateAnalytics() {
     const total = tasks.length;
     const completed = tasks.filter(t => t.completed).length;
@@ -112,7 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
     statDone.textContent = `Hechas: ${completed}`;
   }
 
-  // Helper para formato de fecha de vencimiento
   function getDueLabel(dateStr) {
     if (!dateStr) return null;
     const target = new Date(dateStr + 'T00:00:00');
@@ -127,11 +118,9 @@ document.addEventListener('DOMContentLoaded', () => {
     return { label: `Faltan ${diffDays}d`, isOverdue: false };
   }
 
-  // Render principal del tablero
   function render() {
     taskList.innerHTML = '';
 
-    // Filtrado combinado por estado y búsqueda
     let filtered = tasks.slice().sort((a, b) => a.order - b.order);
 
     if (currentFilter === 'pending') filtered = filtered.filter(t => !t.completed);
@@ -186,21 +175,17 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         `;
 
-        // Evento checkbox
         const chk = li.querySelector('.task-checkbox');
         chk.addEventListener('change', () => toggleTask(task.id));
 
-        // Evento eliminar
         const delBtn = li.querySelector('.btn-delete');
         delBtn.addEventListener('click', () => deleteTask(task.id));
 
-        // Evento edición en línea (Click en botón o doble clic en el texto)
         const editBtn = li.querySelector('.btn-edit');
         const titleSpan = li.querySelector('.task-title');
         editBtn.addEventListener('click', () => startInlineEdit(task.id, titleSpan));
         titleSpan.addEventListener('dblclick', () => startInlineEdit(task.id, titleSpan));
 
-        // Listeners para HTML5 Drag and Drop
         setupDragAndDrop(li);
 
         taskList.appendChild(li);
@@ -210,7 +195,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateAnalytics();
   }
 
-  // Edición Inline al vuelo
   function startInlineEdit(id, textElement) {
     const currentTitle = textElement.textContent;
     const input = document.createElement('input');
@@ -238,7 +222,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Configuración de Drag and Drop
   function setupDragAndDrop(item) {
     item.addEventListener('dragstart', (e) => {
       draggedTaskId = item.dataset.id;
@@ -272,7 +255,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Reordenar posiciones del arreglo
   function reorderTasks(fromId, toId) {
     const fromIndex = tasks.findIndex(t => t.id === fromId);
     const toIndex = tasks.findIndex(t => t.id === toId);
@@ -281,14 +263,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const [movedItem] = tasks.splice(fromIndex, 1);
       tasks.splice(toIndex, 0, movedItem);
 
-      // Reindexar orden
       tasks.forEach((t, i) => t.order = i);
       saveState();
       render();
     }
   }
 
-  // Crear tarea
   taskForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const title = taskInput.value.trim();
@@ -317,7 +297,6 @@ document.addEventListener('DOMContentLoaded', () => {
     taskInput.focus();
   });
 
-  // Alternar completado
   function toggleTask(id) {
     tasks = tasks.map(t => {
       if (t.id === id) {
@@ -331,7 +310,6 @@ document.addEventListener('DOMContentLoaded', () => {
     render();
   }
 
-  // Eliminar tarea
   function deleteTask(id) {
     tasks = tasks.filter(t => t.id !== id);
     playBeep('danger');
@@ -339,14 +317,12 @@ document.addEventListener('DOMContentLoaded', () => {
     render();
   }
 
-  // Limpiar terminadas
   clearCompletedBtn.addEventListener('click', () => {
     tasks = tasks.filter(t => !t.completed);
     saveState();
     render();
   });
 
-  // Filtros de estado
   filterChips.forEach(chip => {
     chip.addEventListener('click', () => {
       filterChips.forEach(c => {
@@ -360,13 +336,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Búsqueda interactiva en tiempo real
   searchInput.addEventListener('input', (e) => {
     searchQuery = e.target.value;
     render();
   });
 
-  // Exportar a JSON
   exportBtn.addEventListener('click', () => {
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(tasks, null, 2));
     const downloadAnchor = document.createElement('a');
@@ -377,7 +351,6 @@ document.addEventListener('DOMContentLoaded', () => {
     downloadAnchor.remove();
   });
 
-  // Importar desde JSON
   importInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -407,6 +380,5 @@ document.addEventListener('DOMContentLoaded', () => {
     return div.innerHTML;
   }
 
-  // Inicialización
   render();
 });

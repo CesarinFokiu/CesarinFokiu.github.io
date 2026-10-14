@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Alternar Tema Claro / Oscuro con LocalStorage
   const themeToggle = document.getElementById('themeToggle');
   const themeIcon = themeToggle ? themeToggle.querySelector('.theme-icon') : null;
   const htmlElement = document.documentElement;
@@ -26,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 2. Menú Hamburguesa para Móviles
   const navToggle = document.getElementById('navToggle');
   const navMenu = document.getElementById('navMenu');
   const navLinks = document.querySelectorAll('.nav-link');
@@ -37,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
       navToggle.setAttribute('aria-expanded', isOpen);
     });
 
-    // Cerrar menú al hacer clic en cualquier enlace
     navLinks.forEach(link => {
       link.addEventListener('click', () => {
         navMenu.classList.remove('open');
@@ -45,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Cerrar menú si se hace clic fuera de él
     document.addEventListener('click', (e) => {
       if (!navMenu.contains(e.target) && !navToggle.contains(e.target) && navMenu.classList.contains('open')) {
         navMenu.classList.remove('open');
@@ -54,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 3. Copiar Correo al Portapapeles
   const copyBtn = document.getElementById('copyBtn');
   const emailText = document.getElementById('emailText');
   const copyToast = document.getElementById('copyToast');
@@ -76,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 4. Animación suave de aparición al hacer scroll (Intersection Observer)
   const reveals = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries, obs) => {
@@ -92,17 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     reveals.forEach(element => observer.observe(element));
   } else {
-    // Fallback para navegadores antiguos
     reveals.forEach(element => element.classList.add('active'));
   }
 
-  // 5. Año dinámico en el Footer
   const yearElement = document.getElementById('currentYear');
   if (yearElement) {
     yearElement.textContent = new Date().getFullYear();
   }
 
-  // 6. Efecto Typewriter en el Logo
   const typingElement = document.getElementById('typingText');
   const textToType = "César Hernández Garrido";
   let charIndex = 0;
